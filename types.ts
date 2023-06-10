@@ -26,3 +26,5 @@ export type SoundDataAndPlayback = {
   sound: SoundData;
   playback: Audio.Sound;
 };
+
+export type PlaybackStatus = "PLAYING" | "PAUSED" | "NONE";

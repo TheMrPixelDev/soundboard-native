@@ -1,5 +1,6 @@
 import { Pressable, View, Text } from 'react-native';
 import { SoundData } from './types';
+import * as Clipboard from 'expo-clipboard';
 
 export type SoundButtonProps = {
   soundData: SoundData;
