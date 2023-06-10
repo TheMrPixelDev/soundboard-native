@@ -1,7 +1,6 @@
 import { Dialog, Button } from '@rneui/base';
 import { PlaybackStatus, SoundData } from './types';
 import { Modal, Text, StyleSheet } from 'react-native';
-import { Icon } from '@rneui/themed';
 
 export type PlaybackDialogProps = {
   playbackStatus: PlaybackStatus;
@@ -25,7 +24,7 @@ export const PlaybackDialog = (props: PlaybackDialogProps) => {
           : 'Es wird kein Sound abgespielt'}
       </Text>
       <Button
-        color="primary"
+        color={playbackStatus === 'PLAYING' ? 'primary' : 'success'}
         containerStyle={styles.iconButton}
         onPress={
           playbackStatus === 'PAUSED'
@@ -35,20 +34,10 @@ export const PlaybackDialog = (props: PlaybackDialogProps) => {
             : undefined
         }
       >
-        <Icon
-          style={styles.innerIcon}
-          type="material"
-          name={playbackStatus === 'PLAYING' ? 'pause' : 'play-arrow'}
-          color="white"
-        ></Icon>
+        <Text>{playbackStatus === 'PLAYING' ? 'PAUSE' : 'FORTFAHREN'}</Text>
       </Button>
       <Button color="error" containerStyle={styles.iconButton} onPress={onStop}>
-        <Icon
-          type="material"
-          name="stop"
-          color="white"
-          style={styles.innerIcon}
-        ></Icon>
+        <Text>STOP</Text>
       </Button>
     </Dialog>
   );

@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { Header } from './Header';
 import { Body } from './Body';
 import { useState } from 'react';
-import { SoundData, SoundDataAndPlayback } from './types';
+import { PlaybackStatus, SoundData, SoundDataAndPlayback } from './types';
 import { Audio } from 'expo-av';
 import { PlaybackDialog } from './PlaybackDialog';
 
@@ -11,9 +11,7 @@ export default function App() {
   const [currentSound, setCurrentSound] = useState<
     SoundDataAndPlayback | undefined
   >(undefined);
-  const [playbackStatus, setPlaybackStatus] = useState<
-    'PLAYING' | 'PAUSED' | 'NONE'
-  >('NONE');
+  const [playbackStatus, setPlaybackStatus] = useState<PlaybackStatus>('NONE');
 
   async function playSound(soundToPlay: SoundData) {
     if (playbackStatus === 'NONE') {
