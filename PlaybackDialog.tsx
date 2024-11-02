@@ -1,6 +1,6 @@
-import { Dialog, Button } from '@rneui/base';
 import { PlaybackStatus, SoundData } from './types';
-import { Modal, Text, StyleSheet } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { Dialog, Portal, IconButton } from 'react-native-paper';
 
 export type PlaybackDialogProps = {
   playbackStatus: PlaybackStatus;
@@ -14,32 +14,38 @@ export const PlaybackDialog = (props: PlaybackDialogProps) => {
   const { soundData, playbackStatus, onStop, onResume, onPause } = props;
 
   return (
-    <Dialog
-      isVisible={playbackStatus === 'PAUSED' || playbackStatus === 'PLAYING'}
-      ModalComponent={Modal}
-    >
-      <Text style={{ color: 'white', fontWeight: '600', margin: 10 }}>
-        {soundData !== undefined
-          ? soundData.text
-          : 'Es wird kein Sound abgespielt'}
-      </Text>
-      <Button
-        color={playbackStatus === 'PLAYING' ? 'primary' : 'success'}
-        containerStyle={styles.iconButton}
-        onPress={
-          playbackStatus === 'PAUSED'
-            ? onResume
-            : playbackStatus === 'PLAYING'
-            ? onPause
-            : undefined
-        }
-      >
-        <Text>{playbackStatus === 'PLAYING' ? 'PAUSE' : 'FORTFAHREN'}</Text>
-      </Button>
-      <Button color="error" containerStyle={styles.iconButton} onPress={onStop}>
-        <Text>STOP</Text>
-      </Button>
-    </Dialog>
+    <SafeAreaView>
+      <Portal>
+        <Dialog
+          visible={playbackStatus === 'PLAYING' || playbackStatus === 'PAUSED'}
+        >
+          <Dialog.Title>
+            {soundData !== undefined
+              ? soundData.text
+              : 'Es wird kein Sound abgespielt'}
+          </Dialog.Title>
+          <Dialog.Actions>
+            <IconButton
+              icon={playbackStatus === 'PLAYING' ? 'pause' : 'play'}
+              mode="contained"
+              onPress={
+                playbackStatus === 'PAUSED'
+                  ? onResume
+                  : playbackStatus === 'PLAYING'
+                  ? onPause
+                  : undefined
+              }
+            />
+            <IconButton
+              mode="contained"
+              containerColor="#d8545b"
+              icon="stop"
+              onPress={onStop}
+            />
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+    </SafeAreaView>
   );
 };
 

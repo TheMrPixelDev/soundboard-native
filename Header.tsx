@@ -1,14 +1,21 @@
-import { Header as RNUIHeader } from '@rneui/base';
 import { Text, View } from 'react-native';
+import { Appbar, IconButton, useTheme } from 'react-native-paper';
+import { BodyProps } from './Body';
 
-export const Header = () => {
+export type HeaderProps = {
+  onThemeChange: (darkMode: boolean) => void;
+};
+
+export const Header = ({ onThemeChange }: HeaderProps) => {
+  const theme = useTheme();
+
   return (
-    <RNUIHeader
-      centerComponent={
-        <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-          PXL's Soundboard
-        </Text>
-      }
-    ></RNUIHeader>
+    <Appbar.Header mode="center-aligned">
+      <Appbar.Content title="PXL's Soundboard" />
+      <IconButton
+        icon={theme.dark ? 'white-balance-sunny' : 'moon-waning-crescent'}
+        onPress={() => onThemeChange(!theme.dark)}
+      />
+    </Appbar.Header>
   );
 };

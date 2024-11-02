@@ -4,9 +4,10 @@ import { SoundsDatabase } from './sounds';
 import { SoundData } from './types';
 import { Audio } from 'expo-av';
 import { SoundButton } from './SoundButton';
+import { Surface } from 'react-native-paper';
 
 export type BodyProps = {
-  onSoundClicked: (sound: SoundData) => void;
+  onSoundClicked: (sound: SoundData, stopCallback: () => void) => void;
 };
 
 export const Body = (props: BodyProps) => {
@@ -23,12 +24,11 @@ export const Body = (props: BodyProps) => {
   }, []);
 
   return (
-    <View
+    <Surface
       style={{
         flex: 1,
         width: '100%',
         height: '90%',
-        backgroundColor: '#222',
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -39,12 +39,12 @@ export const Body = (props: BodyProps) => {
             return (
               <SoundButton
                 key={idx}
-                onClick={(sd) => onSoundClicked(sd)}
+                onClick={(sd, stopCallback) => onSoundClicked(sd, stopCallback)}
                 soundData={soundData}
               ></SoundButton>
             );
           })
         : null}
-    </View>
+    </Surface>
   );
 };

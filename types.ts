@@ -25,6 +25,7 @@ export interface SoundData {
 export type SoundDataAndPlayback = {
   sound: SoundData;
   playback: Audio.Sound;
+  onStop: () => void;
 };
 
 export type PlaybackStatus = "PLAYING" | "PAUSED" | "NONE";

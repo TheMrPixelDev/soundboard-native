@@ -1,43 +1,34 @@
-import { Pressable, View, Text } from 'react-native';
+import { useState } from 'react';
 import { SoundData } from './types';
-import * as Clipboard from 'expo-clipboard';
+import { Card, IconButton, MD3Colors, Text } from 'react-native-paper';
 
 export type SoundButtonProps = {
   soundData: SoundData;
-  onClick: (sound: SoundData) => void;
+  onClick: (sound: SoundData, stopCallback: () => void) => void;
 };
 
-export const SoundButton = (props: SoundButtonProps) => {
-  const { text, color } = props.soundData;
+export const SoundButton = ({ soundData, onClick }: SoundButtonProps) => {
+  const [playing, setPlaying] = useState<boolean>(false);
+
+  const { text } = soundData;
+
   return (
-    <Pressable
-      style={{
-        backgroundColor:
-          color === 'red'
-            ? '#e80077'
-            : color === 'green'
-            ? '#53f92a'
-            : color === 'yellow'
-            ? '#bbf92a'
-            : '#48afea',
-        width: '40%',
-        height: 70,
-        margin: 10,
-        borderRadius: 5,
-        padding: 10,
-      }}
-      onPress={() => props.onClick(props.soundData)}
-    >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text
-          style={{
-            color: 'black',
-            fontWeight: '500',
+    <Card mode="contained" style={{ width: '40%', margin: 10 }}>
+      <Card.Content>
+        <Text lineBreakMode="middle">{text}</Text>
+      </Card.Content>
+      <Card.Actions>
+        <IconButton
+          mode="contained"
+          iconColor={MD3Colors.error0}
+          containerColor={'#af8ee5'}
+          icon={playing ? 'stop' : 'play'}
+          onPress={() => {
+            setPlaying(true);
+            onClick(soundData, () => setPlaying(false));
           }}
-        >
-          {text}
-        </Text>
-      </View>
-    </Pressable>
+        />
+      </Card.Actions>
+    </Card>
   );
 };
